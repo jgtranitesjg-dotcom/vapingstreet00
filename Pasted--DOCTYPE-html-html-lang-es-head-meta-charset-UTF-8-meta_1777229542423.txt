@@ -1,0 +1,2841 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAPINGSTREET · Catálogo Mayorista de Vapeo | Colombia</title>
+  <meta name="description" content="Distribución mayorista de productos de vapeo en Colombia: cápsulas Delta 9, líquidos importados, baterías, gomas THC y accesorios. Precios por volumen, envío nacional.">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #06060c;
+      --smoke: #0e0e18;
+      --neon: #c8ff00;
+      --neon2: #a8e000;
+      --ice: #00e5ff;
+      --flame: #ff4500;
+      --gold: #ffd44d;
+      --purple: #9b59ff;
+      --muted: #4a4a62;
+      --muted2: #6b6b88;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.14);
+      --glass: rgba(14,14,24,0.85);
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 4px; }
+    ::-webkit-scrollbar-track { background: var(--smoke); }
+
+    body {
+      background: var(--ink);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+    body.age-locked { overflow: hidden; }
+
+    /* Age Verification Modal */
+    #age-gate {
+      position: fixed;
+      inset: 0;
+      background: rgba(6,6,12,0.98);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+    #age-gate.hidden { display: none; }
+    .age-content {
+      background: var(--smoke);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      border: 1px solid var(--neon);
+    }
+    .age-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      letter-spacing: 0.3em;
+      background: linear-gradient(90deg, var(--neon), var(--ice));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 24px;
+    }
+    .age-title {
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+      color: var(--neon);
+    }
+    .age-text {
+      color: var(--muted2);
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .age-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+    .age-btn {
+      padding: 16px 40px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      font-weight: 600;
+    }
+    .age-btn.yes {
+      background: linear-gradient(135deg, var(--neon), var(--ice));
+      color: var(--ink);
+      box-shadow: 0 4px 15px rgba(200,255,0,0.3);
+    }
+    .age-btn.no {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted2);
+    }
+    .age-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,255,0,0.4); }
+    .age-btn.no:hover { border-color: var(--danger); color: var(--danger); }
+    .age-warning {
+      font-size: 0.75rem;
+      color: var(--warning);
+      margin-top: 24px;
+      font-style: italic;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* Particles Background */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Grid BG */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(200,255,0,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,255,0,.018) 1px, transparent 1px);
+      background-size: 72px 72px;
+    }
+
+    /* Glow Blobs */
+    .glow-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-blob.g1 { width: 600px; height: 600px; background: rgba(200,255,0,.04); top: -200px; left: -200px; animation: float 20s ease-in-out infinite; }
+    .glow-blob.g2 { width: 500px; height: 500px; background: rgba(0,229,255,.03); bottom: -150px; right: -150px; animation: float 25s ease-in-out infinite reverse; }
+    @keyframes float { 0%,100%{transform:translate(0,0)}50%{transform:translate(30px,20px)} }
+
+    /* Scroll Progress */
+    .spb { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 1000; background: rgba(255,255,255,0.03); }
+    .spbi { height: 100%; background: linear-gradient(90deg, var(--neon), var(--ice)); width: 0%; transition: width 0.1s; box-shadow: 0 0 10px rgba(200,255,0,.6); }
+
+    /* Splash Screen */
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s;
+    }
+    #splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .splash-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      letter-spacing: 0.15em;
+      margin-bottom: 24px;
+      background: linear-gradient(90deg, var(--neon), var(--ice));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.7} }
+    .splash-ticker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--muted2);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .ticker-content {
+      display: inline-block;
+      animation: ticker 15s linear infinite;
+      padding-left: 100%;
+    }
+    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 70px;
+      z-index: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: var(--glass);
+      backdrop-filter: blur(28px);
+      border-bottom: 1px solid var(--border);
+      transform: translateY(-100%);
+      transition: transform 0.7s cubic-bezier(.16,1,.3,1);
+    }
+    nav.vis { transform: translateY(0); }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.35em;
+      background: linear-gradient(90deg, var(--neon), var(--ice));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .nav-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.2em;
+      color: var(--muted2);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 100px;
+      border: 1px solid transparent;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      background: none;
+      cursor: pointer;
+    }
+    .nav-btn:hover, .nav-btn.active { color: var(--neon); border-color: rgba(200,255,0,.3); background: rgba(200,255,0,.05); }
+    .cart-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background: var(--neon);
+      color: var(--ink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      font-weight: 700;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
+    /* Categories Tabs */
+    .categories {
+      position: sticky;
+      top: 70px;
+      z-index: 700;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .categories::-webkit-scrollbar { display: none; }
+    .cat-tab {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.18em;
+      color: var(--muted2);
+      padding: 10px 20px;
+      border-radius: 100px;
+      border: 1px solid transparent;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: all 0.3s;
+      cursor: pointer;
+      background: none;
+    }
+    .cat-tab:hover, .cat-tab.active { color: var(--neon); border-color: rgba(200,255,0,.3); background: rgba(200,255,0,.05); }
+    .cat-tab.admin-add {
+      border-style: dashed;
+      color: var(--neon);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 32px 60px;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 10vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: 0.03em;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s 0.3s forwards cubic-bezier(.16,1,.3,1);
+    }
+    .hero-title .neon { color: var(--neon); text-shadow: 0 0 30px rgba(200,255,0,0.5); }
+    .hero-title .ice { color: var(--ice); text-shadow: 0 0 30px rgba(0,229,255,0.5); }
+    .hero-sub {
+      max-width: 600px;
+      font-size: 1rem;
+      color: var(--muted2);
+      line-height: 1.8;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s 0.5s forwards;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: none; } }
+
+    /* Catalog Grid */
+    .catalog-section {
+      position: relative;
+      z-index: 1;
+      padding: 40px 32px 80px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.05em;
+    }
+    .section-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+      color: var(--neon);
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border: 1px solid rgba(200,255,0,.3);
+      border-radius: 100px;
+      background: rgba(200,255,0,.05);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .product-card {
+      background: var(--smoke);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .product-card.in { opacity: 1; transform: translateY(0); transition: opacity 0.5s, transform 0.5s cubic-bezier(.16,1,.3,1), border-color 0.3s; }
+    .product-card:hover { 
+      border-color: rgba(200,255,0,.3); 
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(200,255,0,0.1);
+    }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(200,255,0,.06), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .product-card:hover::before { opacity: 1; }
+
+    .product-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.45rem;
+      letter-spacing: 0.15em;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .badge-new { background: var(--neon); color: var(--ink); }
+    .badge-hot { background: var(--flame); color: #fff; }
+    .badge-import { background: var(--ice); color: var(--ink); }
+    .badge-premium { background: var(--gold); color: var(--ink); }
+
+    .product-img {
+      width: 100%;
+      height: 200px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      cursor: zoom-in;
+    }
+    .product-img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s;
+    }
+    .product-card:hover .product-img img { transform: scale(1.05); }
+    .product-img-placeholder {
+      font-size: 4rem;
+      opacity: 0.5;
+    }
+
+    .product-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .product-desc {
+      font-size: 0.8rem;
+      color: var(--muted2);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      min-height: 48px;
+    }
+    .product-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--neon);
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+    .product-price small {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--muted2);
+      letter-spacing: 0.1em;
+      font-weight: 400;
+    }
+
+    .btn-add {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--neon), var(--ice));
+      border: none;
+      color: var(--ink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 700;
+    }
+    .btn-add:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(200,255,0,0.4);
+    }
+
+    .admin-controls {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .product-card:hover .admin-controls { opacity: 1; }
+    .admin-btn {
+      flex: 1;
+      padding: 8px;
+      font-size: 0.5rem;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color: var(--muted2);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .admin-btn:hover { border-color: var(--neon); color: var(--neon); }
+    .admin-btn.delete:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* Modal Scales */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(6,6,12,0.95);
+      backdrop-filter: blur(12px);
+      z-index: 1500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .modal.active { opacity: 1; visibility: visible; }
+    .modal-content {
+      background: var(--smoke);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s cubic-bezier(.16,1,.3,1);
+    }
+    .modal.active .modal-content { transform: translateY(0); }
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .modal-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.03em;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--muted2);
+      font-size: 1.6rem;
+      cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--neon); }
+    .modal-body { padding: 24px; }
+
+    .scales-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+    .scale-row {
+      display: grid;
+      grid-template-columns: 1fr 100px 120px;
+      gap: 12px;
+      align-items: center;
+      padding: 16px;
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .scale-row:hover { border-color: rgba(200,255,0,.3); background: rgba(200,255,0,.03); }
+    .scale-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+    .scale-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: var(--neon);
+      text-align: right;
+    }
+    .scale-qty {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px;
+    }
+    .scale-qty button {
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      color: var(--neon);
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .scale-qty button:hover { background: rgba(200,255,0,.1); }
+    .scale-qty input {
+      width: 50px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .modal-footer {
+      padding: 20px 24px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .modal-total {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted2);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .modal-total span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--neon);
+      letter-spacing: 0.02em;
+      margin-left: 12px;
+    }
+    .btn-primary {
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--neon), var(--ice));
+      color: var(--ink);
+      border: none;
+      border-radius: 8px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 700;
+    }
+    .btn-primary:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 5px 20px rgba(200,255,0,0.4);
+    }
+
+    /* Cart Drawer */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 450px;
+      max-width: 100%;
+      height: 100vh;
+      background: var(--smoke);
+      border-left: 1px solid var(--border);
+      z-index: 1400;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-drawer.active { transform: translateX(0); }
+    .cart-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.03em;
+    }
+    .cart-close {
+      background: none;
+      border: none;
+      color: var(--muted2);
+      font-size: 1.6rem;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .cart-close:hover { color: var(--neon); }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cart-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .cart-item:hover { border-color: rgba(200,255,0,.2); }
+
+    .cart-item-info { min-width: 0; }
+    .cart-item-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cart-item-scale {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      color: var(--muted2);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cart-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 8px;
+    }
+    .cart-item-qty button {
+      width: 24px;
+      height: 24px;
+      background: none;
+      border: none;
+      color: var(--neon);
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .cart-item-qty span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      min-width: 24px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .cart-item-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      color: var(--neon);
+      text-align: right;
+      align-self: flex-start;
+    }
+    .cart-item-delete {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      background: none;
+      border: none;
+      color: var(--muted2);
+      cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .cart-item-delete:hover { color: var(--danger); }
+
+    /* Recommendations Carousel */
+    .recommendations {
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      background: rgba(200,255,0,.02);
+    }
+    .rec-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      color: var(--neon);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .rec-title::before {
+      content: '';
+      width: 30px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--neon), transparent);
+    }
+    .rec-carousel {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .rec-carousel::-webkit-scrollbar { display: none; }
+    .rec-item {
+      min-width: 140px;
+      padding: 12px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .rec-item:hover { 
+      border-color: rgba(200,255,0,.3); 
+      transform: translateY(-2px);
+      background: rgba(200,255,0,.05);
+    }
+    .rec-item-img {
+      width: 100%;
+      height: 80px;
+      background: rgba(200,255,0,.08);
+      border: 1px solid rgba(200,255,0,.2);
+      border-radius: 4px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      overflow: hidden;
+    }
+    .rec-item-img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .rec-item-name {
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .rec-item-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      color: var(--neon);
+    }
+
+    .cart-footer {
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      background: rgba(255,255,255,.01);
+    }
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-total-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted2);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .cart-total-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--neon);
+      letter-spacing: 0.02em;
+    }
+    .btn-checkout {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--neon), var(--ice));
+      color: var(--ink);
+      border: none;
+      border-radius: 8px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+    .btn-checkout:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 5px 20px rgba(200,255,0,0.4);
+    }
+    .btn-checkout:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Product Detail Modal */
+    .product-detail-modal .modal-content {
+      max-width: 800px;
+    }
+    .product-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .product-detail-image {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+    .product-detail-image img {
+      max-width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+    }
+    .product-detail-info h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .product-detail-desc {
+      color: var(--muted2);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .product-detail-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--neon);
+      margin-bottom: 24px;
+    }
+
+    /* Checkout Modal */
+    .checkout-steps { display: flex; flex-direction: column; gap: 24px; }
+    .checkout-step { opacity: 0.5; transition: opacity 0.3s; }
+    .checkout-step.active { opacity: 1; }
+    .step-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      color: var(--neon);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .step-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .order-summary {
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.85rem;
+    }
+    .order-item:last-child { border-bottom: none; }
+    .order-total {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 16px;
+      margin-top: 16px;
+      border-top: 1px solid var(--border);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .order-total .value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--neon);
+    }
+
+    .btn-whatsapp {
+      width: 100%;
+      padding: 18px;
+      background: #25D366;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 12px;
+      font-weight: 700;
+    }
+    .btn-whatsapp:hover { 
+      background: #128C7E; 
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(37,211,102,0.3);
+    }
+
+    /* Admin Panel */
+    #admin-panel {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 900;
+    }
+    .admin-toggle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--smoke);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .admin-toggle:hover { border-color: var(--neon); transform: scale(1.1); }
+    .admin-toggle.active { border-color: var(--neon); background: rgba(200,255,0,0.1); }
+    .admin-toggle svg { width: 24px; height: 24px; color: var(--muted2); }
+    .admin-toggle.active svg { color: var(--neon); }
+
+    .admin-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(6,6,12,0.95);
+      z-index: 1600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .admin-modal.active { opacity: 1; visibility: visible; }
+    .admin-content {
+      background: var(--smoke);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 700px;
+      padding: 32px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .admin-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .admin-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-group label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--muted2);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.3s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--neon);
+    }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+
+    .scales-admin {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .scale-admin-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .scale-admin-row input {
+      flex: 1;
+      padding: 10px;
+      font-size: 0.8rem;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .btn-secondary {
+      flex: 1;
+      padding: 14px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-secondary:hover { border-color: var(--neon); color: var(--neon); }
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+      border: none;
+    }
+    .btn-danger:hover { background: #dc2626; }
+
+    /* Editable elements in admin mode */
+    [contenteditable="true"] {
+      outline: none;
+      border-bottom: 2px dashed rgba(200,255,0,.4);
+      transition: border-color 0.2s;
+    }
+    [contenteditable="true"]:focus {
+      border-bottom-color: var(--neon);
+      background: rgba(200,255,0,.05);
+    }
+    .admin-indicator {
+      position: fixed;
+      top: 90px;
+      right: 24px;
+      background: rgba(200,255,0,.1);
+      border: 1px solid rgba(200,255,0,.3);
+      color: var(--neon);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      padding: 8px 16px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      z-index: 850;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+    .admin-indicator.active { display: flex; }
+    .admin-indicator::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--neon);
+      border-radius: 50%;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    /* FAQ Accordion */
+    .faq-section {
+      position: relative;
+      z-index: 1;
+      padding: 80px 32px 100px;
+      border-top: 1px solid var(--border);
+    }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 16px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      background: var(--smoke);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .faq-question:hover { background: rgba(255,255,255,.02); }
+    .faq-question::after {
+      content: '+';
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.4rem;
+      color: var(--neon);
+      transition: transform 0.3s;
+    }
+    .faq-item.active .faq-question::after { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 24px;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding: 0 24px 20px;
+    }
+    .faq-answer p {
+      font-size: 0.85rem;
+      color: var(--muted2);
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer a {
+      color: var(--neon);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--ice); }
+
+    /* Image Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(6,6,12,0.98);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .lightbox.active { opacity: 1; visibility: visible; }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 3rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+
+    /* Toast Notifications */
+    #toast-container {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+    .toast {
+      background: var(--smoke);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--neon);
+      padding: 16px 24px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      animation: slideUp 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .toast.success { border-left-color: var(--success); }
+    .toast.error { border-left-color: var(--danger); }
+    .toast.warning { border-left-color: var(--warning); }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Loading states */
+    .loading {
+      position: relative;
+      pointer-events: none;
+    }
+    .loading::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(6,6,12,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid rgba(200,255,0,0.3);
+      border-top-color: var(--neon);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .categories { padding: 16px 20px; }
+      .hero { padding: 100px 20px 60px; }
+      .catalog-section, .faq-section { padding: 40px 20px 80px; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+      .cart-drawer { width: 100%; max-width: 100vw; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+      #admin-panel { bottom: 16px; right: 16px; }
+      .scale-row { grid-template-columns: 1fr 80px 100px; }
+      .section-header { flex-direction: column; align-items: flex-start; }
+      .product-detail-grid { grid-template-columns: 1fr; }
+      .scales-admin { grid-template-columns: 1fr; }
+    }
+
+    /* Utility */
+    .hidden { display: none !important; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body class="age-locked">
+
+<!-- Age Verification Modal -->
+<div id="age-gate">
+  <div class="age-content">
+    <div class="age-logo">VAPINGSTREET</div>
+    <h2 class="age-title">⚠️ Verificación de Edad</h2>
+    <p class="age-text">
+      Este sitio contiene productos relacionados con vapeo y está destinado exclusivamente para mayores de 18 años. 
+      Al continuar, confirmas que tienes la edad legal para acceder a este contenido en tu jurisdicción.
+    </p>
+    <div class="age-buttons">
+      <button class="age-btn no" id="age-no">Soy menor de 18</button>
+      <button class="age-btn yes" id="age-yes">Soy mayor de 18 - Ingresar</button>
+    </div>
+    <p class="age-warning">
+      <span>⚠️</span>
+      El consumo de estos productos puede ser perjudicial para la salud. Prohibida su venta a menores.
+    </p>
+  </div>
+</div>
+
+<!-- Particles Background -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- Background Effects -->
+<div class="grid-bg"></div>
+<div class="glow-blob g1"></div>
+<div class="glow-blob g2"></div>
+
+<!-- Scroll Progress -->
+<div class="spb"><div class="spbi" id="spbi"></div></div>
+
+<!-- Splash Screen -->
+<div id="splash" class="hidden">
+  <div class="splash-logo">VAPINGSTREET</div>
+  <div class="splash-ticker">
+    <div class="ticker-content">
+      CÁPSULAS DELTA 9 • LÍQUIDOS IMPORTADOS • BATERÍAS • GOMAS THC • ACCESORIOS • ENVÍO NACIONAL •
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav id="nav">
+  <a href="#" class="nav-logo">VAPINGSTREET</a>
+  <div class="nav-actions">
+    <button class="nav-btn" id="admin-toggle-btn">Admin</button>
+    <button class="nav-btn cart-btn" id="cart-toggle">
+      <span>Carrito</span>
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- Categories -->
+<div class="categories" id="categories">
+  <button class="cat-tab active" data-cat="all">Todos</button>
+  <!-- Categories will be dynamically populated -->
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <h1 class="hero-title">
+    <span class="neon">CATÁLOGO</span><br>
+    <span class="ice">MAYORISTA</span>
+  </h1>
+  <p class="hero-sub">
+    Distribución premium de productos de vapeo en Colombia. Precios por volumen, envío nacional asegurado y soporte dedicado para tu negocio. Productos 100% garantizados.
+  </p>
+</section>
+
+<!-- Catalog -->
+<section class="catalog-section">
+  <div class="section-header">
+    <h2 class="section-title" id="catalog-title">Todos los productos</h2>
+    <span class="section-badge" id="product-count">0 productos</span>
+  </div>
+  <div class="products-grid" id="products-grid"></div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="section-header" style="justify-content:center;margin-bottom:40px">
+    <h2 class="section-title">Preguntas Frecuentes</h2>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <button class="faq-question">¿Cuál es el pedido mínimo?</button>
+      <div class="faq-answer"><p>El pedido mínimo varía por producto. Revisa las escalas de precio en cada ficha. Generalmente desde 10 unidades en adelante aplican precios mayoristas.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">¿Hacen envíos a todo el país?</button>
+      <div class="faq-answer"><p>Sí, realizamos envíos a todas las ciudades principales de Colombia con transporte asegurado y seguimiento en tiempo real. El costo se calcula al finalizar tu pedido según peso y destino.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">¿Cómo funciona el pago?</button>
+      <div class="faq-answer"><p>Aceptamos transferencia bancaria, Nequi, Daviplata y efectivo contra entrega en ciudades seleccionadas. Todos los precios están en pesos colombianos (COP) e incluyen IVA cuando aplica.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">¿Tienen garantía en los productos?</button>
+      <div class="faq-answer"><p>Todos nuestros productos cuentan con garantía de fábrica. En caso de defecto, gestionamos el reemplazo directo con el proveedor. Los líquidos y cápsulas tienen garantía de pureza y contenido.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div>VAPINGSTREET © 2025</div>
+  <div>Catálogo Mayorista · Bogotá, Colombia</div>
+  <div>WhatsApp: <a href="https://wa.me/573000000000">+57 300 000 0000</a></div>
+  <div style="width:100%;text-align:center;margin-top:16px;font-size:0.5rem;color:var(--muted)">
+    Productos destinados exclusivamente para mayores de 18 años. Consuma responsablemente.
+  </div>
+</footer>
+
+<!-- Modals -->
+<!-- Scales Modal -->
+<div class="modal" id="scales-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-product-name">Producto</h3>
+      <button class="modal-close" id="modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="scales-list" id="scales-list"></div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-total">Total: <span id="modal-total">$0</span></div>
+      <button class="btn-primary" id="modal-add-cart">Agregar al carrito →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Product Detail Modal -->
+<div class="modal product-detail-modal" id="product-detail-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title" id="detail-product-name">Producto</h3>
+      <button class="modal-close" id="detail-modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="product-detail-grid">
+        <div class="product-detail-image" id="detail-image">
+          <img src="" alt="" id="detail-img-element">
+        </div>
+        <div class="product-detail-info">
+          <h3 id="detail-name"></h3>
+          <p class="product-detail-desc" id="detail-desc"></p>
+          <div class="product-detail-price" id="detail-price"></div>
+          <button class="btn-primary" id="detail-add-cart" style="width:100%">Ver Escalas y Comprar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <h3 class="cart-title">Tu Carrito</h3>
+    <button class="cart-close" id="cart-close">&times;</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="recommendations" id="recommendations">
+    <div class="rec-title">Recomendado para ti</div>
+    <div class="rec-carousel" id="rec-carousel"></div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total del pedido</span>
+      <span class="cart-total-value" id="cart-total">$0</span>
+    </div>
+    <button class="btn-checkout" id="checkout-btn">Proceder al pago →</button>
+  </div>
+</div>
+
+<!-- Checkout Modal -->
+<div class="modal" id="checkout-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Finalizar Pedido</h3>
+      <button class="modal-close" id="checkout-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="checkout-steps">
+        <div class="checkout-step active" id="step1">
+          <div class="step-number">Paso 1 de 2</div>
+          <h4 class="step-title">Resumen del pedido</h4>
+          <div class="order-summary" id="order-summary"></div>
+          <button class="btn-primary" id="step1-next">Continuar →</button>
+        </div>
+        <div class="checkout-step" id="step2">
+          <div class="step-number">Paso 2 de 2</div>
+          <h4 class="step-title">¡Pedido confirmado!</h4>
+          <p style="font-size:0.85rem;color:var(--muted2);line-height:1.7;margin:20px 0">
+            Tu pedido ha sido generado. Haz clic en el botón de abajo para enviarlo directamente por WhatsApp a nuestro equipo de ventas.
+          </p>
+          <button class="btn-whatsapp" id="whatsapp-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.226 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Enviar pedido por WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Image Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">&times;</button>
+  <img src="" alt="" id="lightbox-img">
+</div>
+
+<!-- Admin Modal -->
+<div class="admin-modal" id="admin-modal">
+  <div class="admin-content">
+    <h3 class="admin-title">🔐 Panel de Administración</h3>
+
+    <!-- Login Form -->
+    <form class="admin-form" id="admin-login">
+      <div class="form-group">
+        <label for="admin-user">Usuario</label>
+        <input type="text" id="admin-user" placeholder="admin" required>
+      </div>
+      <div class="form-group">
+        <label for="admin-pass">Contraseña</label>
+        <input type="password" id="admin-pass" placeholder="••••••" required>
+      </div>
+      <div class="admin-actions">
+        <button type="button" class="btn-secondary" id="admin-cancel">Cancelar</button>
+        <button type="submit" class="btn-primary">Entrar</button>
+      </div>
+    </form>
+
+    <!-- Admin Dashboard (hidden until logged in) -->
+    <div id="admin-dashboard" class="hidden">
+      <div class="admin-form">
+        <div class="form-group">
+          <label>Acciones Rápidas</label>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <button class="btn-primary" id="admin-add-product" style="flex:1;min-width:140px">+ Nuevo Producto</button>
+            <button class="btn-secondary" id="admin-add-category" style="flex:1;min-width:140px">+ Nueva Categoría</button>
+            <button class="btn-secondary" id="admin-export" style="flex:1;min-width:140px">Exportar Datos</button>
+          </div>
+        </div>
+
+        <!-- Product Form -->
+        <div id="admin-product-form" class="hidden">
+          <h4 style="margin:24px 0 16px;font-family:'Bebas Neue';font-size:1.4rem">Editar Producto</h4>
+          <input type="hidden" id="edit-product-id">
+          <div class="form-group">
+            <label for="product-name">Nombre del Producto *</label>
+            <input type="text" id="product-name" required>
+          </div>
+          <div class="form-group">
+            <label for="product-category">Categoría *</label>
+            <select id="product-category" required></select>
+          </div>
+          <div class="form-group">
+            <label for="product-desc">Descripción</label>
+            <textarea id="product-desc"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="product-img">URL de Imagen (o deja vacío para usar emoji)</label>
+            <input type="text" id="product-img" placeholder="https://...">
+            <div style="margin-top:12px;padding:12px;background:rgba(255,255,255,.03);border-radius:6px;font-size:0.8rem;color:var(--muted2)">
+              <strong>Imágenes disponibles:</strong><br>
+              • Dozo Wedding Cake (Gomas)<br>
+              • Muha Meds Mambas (Live Resin)<br>
+              • Honcho Gummies Pressure (Watermelon)<br>
+              • Haze Blue Razz (Midnight Blend)
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Badge (opcional)</label>
+            <select id="product-badge">
+              <option value="">Ninguno</option>
+              <option value="new">Nuevo</option>
+              <option value="hot">Popular</option>
+              <option value="import">Importado</option>
+              <option value="premium">Premium</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Escalas de Precio *</label>
+            <div class="scales-admin">
+              <div class="scale-admin-row">
+                <input type="text" placeholder="detal" class="scale-key" value="detal">
+                <input type="number" placeholder="Precio" class="scale-price-input">
+              </div>
+              <div class="scale-admin-row">
+                <input type="text" placeholder="x10" class="scale-key" value="x10">
+                <input type="number" placeholder="Precio" class="scale-price-input">
+              </div>
+              <div class="scale-admin-row">
+                <input type="text" placeholder="x50" class="scale-key" value="x50">
+                <input type="number" placeholder="Precio" class="scale-price-input">
+              </div>
+              <div class="scale-admin-row">
+                <input type="text" placeholder="x100" class="scale-key" value="x100">
+                <input type="number" placeholder="Precio" class="scale-price-input">
+              </div>
+              <div class="scale-admin-row">
+                <input type="text" placeholder="x500" class="scale-key" value="x500">
+                <input type="number" placeholder="Precio" class="scale-price-input">
+              </div>
+              <div class="scale-admin-row">
+                <input type="text" placeholder="x1000" class="scale-key" value="x1000">
+                <input type="number" placeholder="Precio" class="scale-price-input">
+              </div>
+            </div>
+          </div>
+          <div class="admin-actions">
+            <button type="button" class="btn-secondary" id="admin-product-cancel">Cancelar</button>
+            <button type="button" class="btn-primary" id="admin-product-save">Guardar Producto</button>
+            <button type="button" class="btn-danger" id="admin-product-delete" style="display:none">Eliminar</button>
+          </div>
+        </div>
+
+        <!-- Category Management -->
+        <div class="admin-categories" style="margin-top:32px;padding-top:32px;border-top:1px solid var(--border)">
+          <h4 style="margin:0 0 16px;font-family:'Bebas Neue';font-size:1.4rem">Gestionar Categorías</h4>
+          <div class="form-group">
+            <label for="new-category-name">Nueva Categoría</label>
+            <div style="display:flex;gap:12px">
+              <input type="text" id="new-category-name" placeholder="Nombre de categoría">
+              <input type="text" id="new-category-id" placeholder="ID (ej: caps-delta9)" style="max-width:180px">
+              <button class="btn-primary" id="add-category-btn" style="padding:12px 20px;white-space:nowrap">Añadir</button>
+            </div>
+          </div>
+          <div class="admin-category-list" id="admin-category-list" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Panel Toggle -->
+<div id="admin-panel">
+  <div class="admin-toggle" id="admin-toggle" title="Panel de administración">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </svg>
+  </div>
+</div>
+<div class="admin-indicator" id="admin-indicator">
+  <span>Modo Admin Activo</span>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script>
+// ===== CATALOG DATA WITH IMAGES =====
+const defaultCatalog = [
+  { 
+    id: 1, 
+    name: 'Dozo Wedding Cake X11 - Gomas Veganas', 
+    category: 'gomas-imp', 
+    price: 85000, 
+    scales: { detal: 85000, x10: 75000, x50: 65000, x100: 60000 }, 
+    desc: 'Gomas veganas Wedding Cake 2500mg. Paquete x20 unidades. Sabor premium importado.', 
+    badge: 'premium', 
+    img: 'https://images.unsplash.com/photo-1582053433976-25c00369fc93?w=400&h=400&fit=crop'
+  },
+  { 
+    id: 2, 
+    name: 'Muha Meds Mambas - Live Resin Very Berry', 
+    category: 'caps-premium', 
+    price: 95000, 
+    scales: { detal: 95000, x10: 85000, x50: 75000, x100: 70000 }, 
+    desc: 'Cápsulas Live Resin Very Berry 3000mg. HHC-P + HHC + CBG. Indica premium.', 
+    badge: 'hot', 
+    img: 'https://images.unsplash.com/photo-1603909223429-69bb7101f420?w=400&h=400&fit=crop'
+  },
+  { 
+    id: 3, 
+    name: 'Honcho Gummies Pressure - Watermelon 16000mg', 
+    category: 'gomas-nac', 
+    price: 120000, 
+    scales: { detal: 120000, x5: 110000, x10: 100000 }, 
+    desc: 'Gomas Pressure Watermelon 16000mg. D9 + THCP. Paquete x20 piezas.', 
+    badge: 'new', 
+    img: 'https://images.unsplash.com/photo-1582053433976-25c00369fc93?w=400&h=400&fit=crop'
+  },
+  { 
+    id: 4, 
+    name: 'Haze Blue Razz - Midnight Blend', 
+    category: 'liquidos-imp', 
+    price: 75000, 
+    scales: { detal: 75000, x10: 65000, x50: 55000, x100: 50000 }, 
+    desc: 'Líquido Midnight Blend 2000mg. HHC + D8 + CBN. Sabor Blue Razz importado.', 
+    badge: 'import', 
+    img: 'https://images.unsplash.com/photo-1628102491629-778571d893a3?w=400&h=400&fit=crop'
+  },
+  { 
+    id: 5, 
+    name: 'Cápsula Delta 9 Clear', 
+    category: 'caps-delta9', 
+    price: 60000, 
+    scales: { detal: 60000, x10: 30000, x50: 22000, x100: 18000, x1000: 14000 }, 
+    desc: 'Delta 9 Clear totalmente transparente. Calidad premium garantizada.', 
+    badge: 'premium', 
+    img: '💧' 
+  },
+  { 
+    id: 6, 
+    name: 'Líquido Importado Delta 9 Clear', 
+    category: 'liquidos-imp', 
+    price: 15000, 
+    scales: { detal: 15000, x10: 15000, x50: 10000, x100: 9000, x500: 7000 }, 
+    desc: 'Litro de Delta 9 Clear importado, garantizado al 96.487% THC.', 
+    badge: 'import', 
+    img: '🌍' 
+  },
+  { 
+    id: 7, 
+    name: 'Jeringa Nacional Delta 9', 
+    category: 'jeringas', 
+    price: 13000, 
+    scales: { detal: 13000, x10: 13000, x50: 11000, x100: 9500, x500: 6000 }, 
+    desc: 'Litro nacional garantizado al 94.367% THC. Calidad certificada.', 
+    badge: null, 
+    img: '💉' 
+  },
+  { 
+    id: 8, 
+    name: 'Líquido Full Spectrum Importado', 
+    category: 'liquidos-imp', 
+    price: 25000, 
+    scales: { detal: 25000, x10: 25000, x50: 20000, x100: 18000, x500: 14000 }, 
+    desc: 'Full Spectrum 107.657% THC con diamantes de Live Resin visibles.', 
+    badge: 'premium', 
+    img: '💎' 
+  },
+  { 
+    id: 9, 
+    name: 'Cápsula Nacional', 
+    category: 'caps-nac', 
+    price: 30000, 
+    scales: { detal: 30000, x10: 20000, x50: 18000, x100: 16000, x1000: 12000 }, 
+    desc: 'Cápsulas nacionales en tapa negra o blanca. Totalmente garantizadas.', 
+    badge: null, 
+    img: '⚫' 
+  },
+  { 
+    id: 10, 
+    name: 'Cápsula HTFSE Full Spectrum', 
+    category: 'caps-premium', 
+    price: 80000, 
+    scales: { detal: 80000, x10: 40000, x50: 30000, x100: 28000, x500: 25000 }, 
+    desc: 'Cápsulas HTFSE con diamantes de Live Resin. Experiencia premium.', 
+    badge: 'premium', 
+    img: '✨' 
+  },
+  { 
+    id: 11, 
+    name: 'Batería Brass Tipo C', 
+    category: 'baterias', 
+    price: 25000, 
+    scales: { detal: 25000, x10: 18000, x50: 15000, x100: 13000, x500: 12000 }, 
+    desc: 'Baterías Brass tipo C con garantía. Compatibilidad universal.', 
+    badge: null, 
+    img: '🔋' 
+  },
+  { 
+    id: 12, 
+    name: 'Dispositivo Desechable 3.5ml', 
+    category: 'desechables', 
+    price: 85000, 
+    scales: { detal: 85000, x10: 75000, x50: 60000, x100: 55000 }, 
+    desc: 'Dispositivo desechable de 3.5ml con cargador incluido. Listo para usar.', 
+    badge: 'new', 
+    img: '🔋' 
+  }
+];
+
+const defaultCategories = [
+  { id: 'all', name: 'Todos' },
+  { id: 'caps-delta9', name: 'Cápsulas Delta 9' },
+  { id: 'liquidos-imp', name: 'Líquidos Importados' },
+  { id: 'jeringas', name: 'Jeringas' },
+  { id: 'caps-nac', name: 'Cápsulas Nacionales' },
+  { id: 'caps-premium', name: 'Cápsulas Premium' },
+  { id: 'baterias', name: 'Baterías' },
+  { id: 'desechables', name: 'Desechables' },
+  { id: 'gomas-nac', name: 'Gomas Nacionales' },
+  { id: 'gomas-imp', name: 'Gomas Importadas' }
+];
+
+// ===== STATE =====
+const state = {
+  cart: JSON.parse(localStorage.getItem('vs_cart')) || [],
+  adminMode: localStorage.getItem('vs_admin') === 'true',
+  currentProduct: null,
+  selectedScales: {},
+  catalog: JSON.parse(localStorage.getItem('vs_catalog')) || defaultCatalog,
+  categories: JSON.parse(localStorage.getItem('vs_categories')) || defaultCategories,
+  ageVerified: localStorage.getItem('vs_age_verified') === 'true'
+};
+
+// ===== DOM ELEMENTS =====
+const els = {
+  ageGate: document.getElementById('age-gate'),
+  splash: document.getElementById('splash'),
+  nav: document.getElementById('nav'),
+  categories: document.getElementById('categories'),
+  productsGrid: document.getElementById('products-grid'),
+  catalogTitle: document.getElementById('catalog-title'),
+  productCount: document.getElementById('product-count'),
+  cartToggle: document.getElementById('cart-toggle'),
+  cartDrawer: document.getElementById('cart-drawer'),
+  cartItems: document.getElementById('cart-items'),
+  cartCount: document.getElementById('cart-count'),
+  cartTotal: document.getElementById('cart-total'),
+  cartClose: document.getElementById('cart-close'),
+  scalesModal: document.getElementById('scales-modal'),
+  modalClose: document.getElementById('modal-close'),
+  modalProductName: document.getElementById('modal-product-name'),
+  scalesList: document.getElementById('scales-list'),
+  modalTotal: document.getElementById('modal-total'),
+  modalAddCart: document.getElementById('modal-add-cart'),
+  checkoutBtn: document.getElementById('checkout-btn'),
+  checkoutModal: document.getElementById('checkout-modal'),
+  checkoutClose: document.getElementById('checkout-close'),
+  orderSummary: document.getElementById('order-summary'),
+  step1Next: document.getElementById('step1-next'),
+  step2: document.getElementById('step2'),
+  whatsappBtn: document.getElementById('whatsapp-btn'),
+  adminToggle: document.getElementById('admin-toggle'),
+  adminToggleBtn: document.getElementById('admin-toggle-btn'),
+  adminModal: document.getElementById('admin-modal'),
+  adminLogin: document.getElementById('admin-login'),
+  adminCancel: document.getElementById('admin-cancel'),
+  adminDashboard: document.getElementById('admin-dashboard'),
+  adminIndicator: document.getElementById('admin-indicator'),
+  recCarousel: document.getElementById('rec-carousel'),
+  recommendations: document.getElementById('recommendations'),
+  productDetailModal: document.getElementById('product-detail-modal'),
+  detailModalClose: document.getElementById('detail-modal-close'),
+  detailAddCart: document.getElementById('detail-add-cart'),
+  lightbox: document.getElementById('lightbox'),
+  lightboxImg: document.getElementById('lightbox-img'),
+  lightboxClose: document.getElementById('lightbox-close'),
+  // Admin form elements
+  adminAddProduct: document.getElementById('admin-add-product'),
+  adminAddCategory: document.getElementById('admin-add-category'),
+  adminExport: document.getElementById('admin-export'),
+  productForm: document.getElementById('admin-product-form'),
+  editProductId: document.getElementById('edit-product-id'),
+  productName: document.getElementById('product-name'),
+  productCategory: document.getElementById('product-category'),
+  productDesc: document.getElementById('product-desc'),
+  productImg: document.getElementById('product-img'),
+  productBadge: document.getElementById('product-badge'),
+  productSave: document.getElementById('admin-product-save'),
+  productCancel: document.getElementById('admin-product-cancel'),
+  productDelete: document.getElementById('admin-product-delete'),
+  newCategoryName: document.getElementById('new-category-name'),
+  newCategoryId: document.getElementById('new-category-id'),
+  addCategoryBtn: document.getElementById('add-category-btn'),
+  adminCategoryList: document.getElementById('admin-category-list')
+};
+
+// ===== PARTICLES BACKGROUND =====
+const Particles = {
+  canvas: document.getElementById('particles-canvas'),
+  ctx: null,
+  particles: [],
+  init() {
+    this.ctx = this.canvas.getContext('2d');
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+    this.createParticles(50);
+    this.animate();
+  },
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  },
+  createParticles(count) {
+    for (let i = 0; i < count; i++) {
+      this.particles.push({
+        x: Math.random() * this.canvas.width,
+        y: this.canvas.height + Math.random() * 100,
+        size: Math.random() * 2 + 1,
+        speed: Math.random() * 0.5 + 0.2,
+        color: ['#c8ff00', '#00e5ff', '#ffd44d'][Math.floor(Math.random() * 3)],
+        opacity: Math.random() * 0.5 + 0.1
+      });
+    }
+  },
+  animate() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.particles.forEach(p => {
+      p.y -= p.speed;
+      if (p.y < -10) {
+        p.y = this.canvas.height + 10;
+        p.x = Math.random() * this.canvas.width;
+      }
+      this.ctx.beginPath();
+      this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      this.ctx.fillStyle = p.color + Math.floor(p.opacity * 255).toString(16).padStart(2, '0');
+      this.ctx.fill();
+    });
+    requestAnimationFrame(() => this.animate());
+  }
+};
+
+// ===== AGE VERIFICATION =====
+function checkAgeVerification() {
+  if (state.ageVerified) {
+    els.ageGate.classList.add('hidden');
+    document.body.classList.remove('age-locked');
+    init();
+  } else {
+    els.ageGate.classList.remove('hidden');
+    document.body.classList.add('age-locked');
+  }
+}
+
+document.getElementById('age-yes').addEventListener('click', () => {
+  state.ageVerified = true;
+  localStorage.setItem('vs_age_verified', 'true');
+  els.ageGate.classList.add('hidden');
+  document.body.classList.remove('age-locked');
+  init();
+});
+
+document.getElementById('age-no').addEventListener('click', () => {
+  document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#06060c;color:#fff;font-family:Syne,sans-serif;text-align:center;padding:20px"><div><h1 style="font-family:Bebas Neue;font-size:3rem;margin-bottom:20px;color:var(--danger)">Acceso Denegado</h1><p style="color:var(--muted2);max-width:400px;margin:0 auto;line-height:1.6">Debes ser mayor de 18 años para acceder a este sitio. Gracias por tu comprensión.</p><button onclick="location.href=\'https://google.com\'" style="margin-top:30px;padding:14px 32px;background:var(--danger);color:#fff;border:none;border-radius:8px;font-family:JetBrains Mono,monospace;cursor:pointer;font-size:0.6rem;letter-spacing:0.1em">Salir del Sitio</button></div></div>';
+});
+
+// ===== INIT =====
+function init() {
+  Particles.init();
+
+  setTimeout(() => {
+    els.splash.classList.remove('hidden');
+    els.nav.classList.add('vis');
+  }, 300);
+
+  setTimeout(() => {
+    els.splash.classList.add('hidden');
+  }, 3000);
+
+  renderCategories();
+  renderCatalog('all');
+  updateCartUI();
+  updateRecommendations();
+
+  setupEventListeners();
+  setupAdminListeners();
+
+  window.addEventListener('scroll', () => {
+    const t = window.scrollY;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('spbi').style.width = Math.min(100, (t / h * 100)) + '%';
+  });
+
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isActive = item.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+      if (!isActive) item.classList.add('active');
+    });
+  });
+
+  if (state.adminMode) enableAdminMode();
+  updateAdminCategoryDropdown();
+  renderAdminCategories();
+}
+
+// ===== CATEGORIES =====
+function renderCategories() {
+  const tabs = els.categories.querySelectorAll('.cat-tab');
+  tabs.forEach(tab => {
+    if (tab.dataset.cat !== 'all' && !tab.classList.contains('admin-add')) {
+      tab.remove();
+    }
+  });
+
+  state.categories.filter(c => c.id !== 'all').forEach(cat => {
+    const tab = document.createElement('button');
+    tab.className = 'cat-tab';
+    tab.dataset.cat = cat.id;
+    tab.textContent = cat.name;
+    els.categories.insertBefore(tab, els.categories.lastElementChild);
+  });
+
+  if (state.adminMode && !els.categories.querySelector('.admin-add')) {
+    const addBtn = document.createElement('button');
+    addBtn.className = 'cat-tab admin-add';
+    addBtn.innerHTML = '+';
+    addBtn.title = 'Añadir categoría';
+    addBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openAdminModal();
+      setTimeout(() => els.newCategoryName.focus(), 300);
+    });
+    els.categories.appendChild(addBtn);
+  }
+}
+
+// ===== CATALOG RENDER =====
+function renderCatalog(category) {
+  const products = category === 'all' ? state.catalog : state.catalog.filter(p => p.category === category);
+
+  els.catalogTitle.textContent = category === 'all' ? 'Todos los productos' : 
+    (state.categories.find(c => c.id === category)?.name || category).replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  els.productCount.textContent = `${products.length} productos`;
+
+  els.productsGrid.innerHTML = '';
+
+  products.forEach((product, index) => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.style.transitionDelay = `${index * 0.03}s`;
+    card.innerHTML = `
+      ${product.badge ? `<span class="product-badge badge-${product.badge}">${product.badge}</span>` : ''}
+      <div class="product-img" onclick="openLightbox('${product.img}')">
+        ${product.img.startsWith('http') ? `<img src="${product.img}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=\'product-img-placeholder\'>📦</div>'">` : `<div class="product-img-placeholder">${product.img || '📦'}</div>`}
+      </div>
+      <h3 class="product-name" ${state.adminMode ? 'contenteditable="true" data-field="name"' : ''}>${product.name}</h3>
+      <p class="product-desc" ${state.adminMode ? 'contenteditable="true" data-field="desc"' : ''}>${product.desc || ''}</p>
+      <div class="product-price">$${product.price.toLocaleString('es-CO')} <small>desde</small></div>
+      <button class="btn-add" onclick="openProductDetail(${product.id})">Ver Detalles</button>
+      ${state.adminMode ? `
+        <div class="admin-controls">
+          <button class="admin-btn edit" onclick="openAdminProductEdit(${product.id})">Editar</button>
+          <button class="admin-btn delete" onclick="deleteProduct(${product.id})">Eliminar</button>
+        </div>
+      ` : ''}
+    `;
+    els.productsGrid.appendChild(card);
+
+    setTimeout(() => card.classList.add('in'), 100);
+
+    card.addEventListener('click', (e) => {
+      if (!e.target.closest('.btn-add') && !e.target.closest('.admin-controls') && !e.target.closest('[contenteditable]')) {
+        openProductDetail(product.id);
+      }
+    });
+  });
+
+  if (state.adminMode) {
+    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+      el.addEventListener('blur', saveAdminEdit);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          el.blur();
+        }
+      });
+    });
+  }
+}
+
+// ===== PRODUCT DETAIL MODAL =====
+function openProductDetail(productId) {
+  const product = state.catalog.find(p => p.id === productId);
+  if (!product) return;
+
+  document.getElementById('detail-name').textContent = product.name;
+  document.getElementById('detail-desc').textContent = product.desc;
+  document.getElementById('detail-price').textContent = `$${product.price.toLocaleString('es-CO')} COP`;
+  
+  const imgEl = document.getElementById('detail-img-element');
+  if (product.img.startsWith('http')) {
+    imgEl.src = product.img;
+    imgEl.style.display = 'block';
+  } else {
+    imgEl.style.display = 'none';
+    document.getElementById('detail-image').innerHTML = `<div style="font-size:6rem">${product.img || '📦'}</div>`;
+  }
+
+  els.detailAddCart.onclick = () => {
+    els.productDetailModal.classList.remove('active');
+    openScalesModal(productId);
+  };
+
+  els.productDetailModal.classList.add('active');
+}
+
+// ===== LIGHTBOX =====
+function openLightbox(imgUrl) {
+  if (!imgUrl || !imgUrl.startsWith('http')) return;
+  els.lightboxImg.src = imgUrl;
+  els.lightbox.classList.add('active');
+}
+
+els.lightboxClose.addEventListener('click', () => {
+  els.lightbox.classList.remove('active');
+});
+
+els.lightbox.addEventListener('click', (e) => {
+  if (e.target === els.lightbox) els.lightbox.classList.remove('active');
+});
+
+// ===== SCALES MODAL =====
+function openScalesModal(productId) {
+  const product = state.catalog.find(p => p.id === productId);
+  if (!product) return;
+
+  state.currentProduct = product;
+  state.selectedScales = {};
+
+  els.modalProductName.textContent = product.name;
+  els.scalesList.innerHTML = '';
+
+  const scaleLabels = {
+    'detal': 'Detal (1-9)',
+    'x10': 'Mayor ×10',
+    'x50': 'Mayor ×50',
+    'x100': 'Mayor ×100',
+    'x500': 'Mayor ×500',
+    'x1000': 'Mayor ×1000'
+  };
+
+  const scales = Object.entries(product.scales)
+    .filter(([key]) => scaleLabels[key])
+    .map(([key, price]) => ({ key, label: scaleLabels[key], price }));
+
+  if (scales.length === 0) {
+    els.scalesList.innerHTML = '<p style="color:var(--muted2);text-align:center;padding:40px">Sin escalas disponibles</p>';
+  } else {
+    scales.forEach(scale => {
+      const row = document.createElement('div');
+      row.className = 'scale-row';
+      row.innerHTML = `
+        <span class="scale-label">${scale.label}</span>
+        <span class="scale-price">$${scale.price.toLocaleString('es-CO')}</span>
+        <div class="scale-qty">
+          <button onclick="updateScaleQty('${scale.key}', -1)">−</button>
+          <input type="number" value="0" min="0" data-scale="${scale.key}" onchange="updateModalTotal()">
+          <button onclick="updateScaleQty('${scale.key}', 1)">+</button>
+        </div>
+      `;
+      els.scalesList.appendChild(row);
+    });
+  }
+
+  updateModalTotal();
+  els.scalesModal.classList.add('active');
+}
+
+window.updateScaleQty = function(scale, delta) {
+  const input = document.querySelector(`input[data-scale="${scale}"]`);
+  let val = parseInt(input.value) || 0;
+  val += delta;
+  if (val < 0) val = 0;
+  input.value = val;
+  updateModalTotal();
+};
+
+function updateModalTotal() {
+  if (!state.currentProduct) return;
+
+  let total = 0;
+  els.scalesList.querySelectorAll('.scale-row').forEach(row => {
+    const scale = row.querySelector('input').dataset.scale;
+    const qty = parseInt(row.querySelector('input').value) || 0;
+    const price = state.currentProduct.scales[scale];
+    if (price) total += qty * price;
+  });
+
+  els.modalTotal.textContent = `$${total.toLocaleString('es-CO')}`;
+}
+
+els.modalAddCart.addEventListener('click', () => {
+  if (!state.currentProduct) return;
+
+  let added = false;
+  let totalQty = 0;
+  
+  els.scalesList.querySelectorAll('.scale-row').forEach(row => {
+    const scale = row.querySelector('input').dataset.scale;
+    const qty = parseInt(row.querySelector('input').value) || 0;
+    if (qty > 0 && state.currentProduct.scales[scale]) {
+      const price = state.currentProduct.scales[scale];
+      addToCart(state.currentProduct.id, scale, qty, price);
+      added = true;
+      totalQty += qty;
+    }
+  });
+
+  if (added) {
+    els.scalesModal.classList.remove('active');
+    updateCartUI();
+    updateRecommendations();
+    els.cartDrawer.classList.add('active');
+    showToast(`¡${totalQty} unidad(es) agregada(s) al carrito!`, 'success');
+  } else {
+    showToast('Selecciona una cantidad', 'warning');
+  }
+});
+
+els.modalClose.addEventListener('click', () => {
+  els.scalesModal.classList.remove('active');
+});
+
+// ===== CART =====
+function addToCart(productId, scale, quantity, unitPrice) {
+  const existing = state.cart.find(item => item.productId === productId && item.scale === scale);
+  if (existing) {
+    existing.quantity += quantity;
+  } else {
+    state.cart.push({ productId, scale, quantity, unitPrice });
+  }
+  saveCart();
+}
+
+function removeFromCart(index) {
+  state.cart.splice(index, 1);
+  saveCart();
+  updateCartUI();
+  updateRecommendations();
+  showToast('Producto eliminado del carrito', 'info');
+}
+
+function updateCartItemQty(index, delta) {
+  if (state.cart[index]) {
+    state.cart[index].quantity += delta;
+    if (state.cart[index].quantity <= 0) removeFromCart(index);
+    else {
+      saveCart();
+      updateCartUI();
+    }
+  }
+}
+
+function saveCart() {
+  localStorage.setItem('vs_cart', JSON.stringify(state.cart));
+}
+
+function updateCartUI() {
+  const count = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+  els.cartCount.textContent = count;
+  els.cartCount.style.display = count > 0 ? 'flex' : 'none';
+
+  els.cartItems.innerHTML = '';
+  if (state.cart.length === 0) {
+    els.cartItems.innerHTML = '<p style="text-align:center;color:var(--muted2);padding:60px 20px;font-size:0.9rem">Tu carrito está vacío<br><small>Agrega productos para comenzar</small></p>';
+  } else {
+    state.cart.forEach((item, index) => {
+      const product = state.catalog.find(p => p.id === item.productId);
+      if (!product) return;
+
+      const el = document.createElement('div');
+      el.className = 'cart-item';
+      el.innerHTML = `
+        <div class="cart-item-info">
+          <div class="cart-item-name">${product.name}</div>
+          <div class="cart-item-scale">${item.scale.replace('x', '×')}</div>
+          <div class="cart-item-controls">
+            <div class="cart-item-qty">
+              <button onclick="updateCartItemQty(${index}, -1)">−</button>
+              <span>${item.quantity}</span>
+              <button onclick="updateCartItemQty(${index}, 1)">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="cart-item-price">$${(item.unitPrice * item.quantity).toLocaleString('es-CO')}</div>
+        <button class="cart-item-delete" onclick="removeFromCart(${index})">×</button>
+      `;
+      els.cartItems.appendChild(el);
+    });
+  }
+
+  const total = state.cart.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+  els.cartTotal.textContent = `$${total.toLocaleString('es-CO')}`;
+  els.checkoutBtn.disabled = state.cart.length === 0;
+}
+
+// ===== RECOMMENDATIONS CAROUSEL =====
+function updateRecommendations() {
+  if (state.cart.length === 0) {
+    els.recommendations.style.display = 'none';
+    return;
+  }
+  els.recommendations.style.display = 'block';
+
+  const cartCategories = [...new Set(state.cart.map(item => {
+    const p = state.catalog.find(c => c.id === item.productId);
+    return p?.category;
+  }).filter(Boolean))];
+
+  const recs = state.catalog.filter(p => 
+    !state.cart.some(c => c.productId === p.id) &&
+    (cartCategories.includes(p.category) || Math.random() > 0.5)
+  ).slice(0, 6);
+
+  els.recCarousel.innerHTML = '';
+  if (recs.length === 0) {
+    els.recCarousel.innerHTML = '<p style="font-size:0.75rem;color:var(--muted2);padding:20px">Explora más productos</p>';
+    return;
+  }
+
+  recs.forEach(product => {
+    const el = document.createElement('div');
+    el.className = 'rec-item';
+    el.innerHTML = `
+      <div class="rec-item-img">
+        ${product.img.startsWith('http') ? `<img src="${product.img}" alt="${product.name}">` : `<span style="font-size:2rem">${product.img || '📦'}</span>`}
+      </div>
+      <div class="rec-item-name">${product.name}</div>
+      <div class="rec-item-price">$${product.price.toLocaleString('es-CO')}</div>
+    `;
+    el.addEventListener('click', () => {
+      openScalesModal(product.id);
+      els.cartDrawer.classList.remove('active');
+    });
+    els.recCarousel.appendChild(el);
+  });
+}
+
+// ===== CHECKOUT =====
+els.checkoutBtn.addEventListener('click', () => {
+  if (state.cart.length === 0) return;
+  els.checkoutModal.classList.add('active');
+  renderOrderSummary();
+});
+
+els.checkoutClose.addEventListener('click', () => {
+  els.checkoutModal.classList.remove('active');
+  document.getElementById('step1').classList.add('active');
+  document.getElementById('step2').classList.remove('active');
+});
+
+function renderOrderSummary() {
+  els.orderSummary.innerHTML = state.cart.map(item => {
+    const product = state.catalog.find(p => p.id === item.productId);
+    return `
+      <div class="order-item">
+        <span>${product?.name || 'Producto'} <small style="color:var(--muted2)">(${item.scale})</small></span>
+        <span>${item.quantity} × $${item.unitPrice.toLocaleString('es-CO')}</span>
+      </div>
+    `;
+  }).join('');
+
+  const total = state.cart.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+  els.orderSummary.innerHTML += `
+    <div class="order-total">
+      <span>TOTAL</span>
+      <span class="value">$${total.toLocaleString('es-CO')}</span>
+    </div>
+  `;
+}
+
+els.step1Next.addEventListener('click', () => {
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+});
+
+els.whatsappBtn.addEventListener('click', () => {
+  const total = state.cart.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+  const items = state.cart.map(item => {
+    const p = state.catalog.find(c => c.id === item.productId);
+    return `• ${p?.name || 'Producto'} (${item.scale}): ${item.quantity} × $${item.unitPrice.toLocaleString('es-CO')}`;
+  }).join('\n');
+
+  const message = `*NUEVO PEDIDO - VAPINGSTREET*\n\n${items}\n\n*TOTAL: $${total.toLocaleString('es-CO')}*\n\nDatos de envío:\nNombre: \nCiudad: \nTeléfono: `;
+
+  const url = `https://wa.me/573000000000?text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank');
+
+  state.cart = [];
+  saveCart();
+  updateCartUI();
+  els.checkoutModal.classList.remove('active');
+  document.getElementById('step1').classList.add('active');
+  document.getElementById('step2').classList.remove('active');
+  showToast('Pedido enviado por WhatsApp', 'success');
+});
+
+// ===== ADMIN MODE =====
+function openAdminModal() {
+  els.adminModal.classList.add('active');
+  if (state.adminMode) {
+    document.getElementById('admin-login').classList.add('hidden');
+    els.adminDashboard.classList.remove('hidden');
+  } else {
+    document.getElementById('admin-login').classList.remove('hidden');
+    els.adminDashboard.classList.add('hidden');
+  }
+}
+
+els.adminToggle.addEventListener('click', openAdminModal);
+els.adminToggleBtn.addEventListener('click', openAdminModal);
+
+els.adminCancel.addEventListener('click', () => {
+  els.adminModal.classList.remove('active');
+  document.getElementById('admin-login').reset();
+});
+
+els.adminLogin.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const user = document.getElementById('admin-user').value;
+  const pass = document.getElementById('admin-pass').value;
+
+  if (user === 'admin' && pass === 'vaping2025') {
+    enableAdminMode();
+    els.adminModal.classList.remove('active');
+    document.getElementById('admin-login').reset();
+    showToast('Sesión de administrador iniciada', 'success');
+  } else {
+    showToast('Credenciales incorrectas', 'error');
+  }
+});
+
+function enableAdminMode() {
+  state.adminMode = true;
+  localStorage.setItem('vs_admin', 'true');
+  els.adminToggle.classList.add('active');
+  els.adminIndicator.classList.add('active');
+  renderCategories();
+  renderCatalog(document.querySelector('.cat-tab.active')?.dataset.cat || 'all');
+  updateAdminCategoryDropdown();
+  renderAdminCategories();
+}
+
+function disableAdminMode() {
+  state.adminMode = false;
+  localStorage.removeItem('vs_admin');
+  els.adminToggle.classList.remove('active');
+  els.adminIndicator.classList.remove('active');
+  renderCategories();
+  renderCatalog(document.querySelector('.cat-tab.active')?.dataset.cat || 'all');
+}
+
+function saveAdminEdit(e) {
+  const el = e.target;
+  const card = el.closest('.product-card');
+  if (!card) return;
+
+  const productId = parseInt(card.querySelector('.btn-add').getAttribute('onclick').match(/\d+/)[0]);
+  const product = state.catalog.find(p => p.id === productId);
+  if (!product) return;
+
+  const field = el.dataset.field;
+  if (field === 'name') product.name = el.textContent;
+  else if (field === 'desc') product.desc = el.textContent;
+
+  saveCatalog();
+  showToast('Producto actualizado', 'success');
+}
+
+function saveCatalog() {
+  localStorage.setItem('vs_catalog', JSON.stringify(state.catalog));
+  localStorage.setItem('vs_categories', JSON.stringify(state.categories));
+}
+
+// ===== ADMIN PRODUCT MANAGEMENT =====
+window.openAdminProductEdit = function(productId) {
+  const product = state.catalog.find(p => p.id === productId);
+  if (!product) return;
+
+  els.editProductId.value = product.id;
+  els.productName.value = product.name;
+  els.productCategory.value = product.category;
+  els.productDesc.value = product.desc || '';
+  els.productImg.value = product.img.startsWith('http') ? product.img : '';
+  els.productBadge.value = product.badge || '';
+
+  document.querySelectorAll('.scale-admin-row').forEach((row, i) => {
+    const keyInput = row.querySelector('.scale-key');
+    const priceInput = row.querySelector('.scale-price-input');
+    const key = keyInput.value;
+    priceInput.value = product.scales[key] || '';
+  });
+
+  els.productForm.classList.remove('hidden');
+  els.productDelete.style.display = 'block';
+  els.productDelete.onclick = () => {
+    if (confirm('¿Eliminar este producto permanentemente?')) {
+      deleteProduct(productId);
+      closeAdminProductForm();
+    }
+  };
+};
+
+function closeAdminProductForm() {
+  els.productForm.classList.add('hidden');
+  els.editProductId.value = '';
+  els.productName.value = '';
+  els.productDesc.value = '';
+  els.productImg.value = '';
+  els.productBadge.value = '';
+  document.querySelectorAll('.scale-price-input').forEach(input => input.value = '');
+  els.productDelete.style.display = 'none';
+}
+
+window.deleteProduct = function(productId) {
+  state.catalog = state.catalog.filter(p => p.id !== productId);
+  saveCatalog();
+  renderCatalog(document.querySelector('.cat-tab.active')?.dataset.cat || 'all');
+  showToast('Producto eliminado', 'success');
+};
+
+els.productSave.addEventListener('click', () => {
+  const id = parseInt(els.editProductId.value);
+  const name = els.productName.value.trim();
+  const category = els.productCategory.value;
+  const desc = els.productDesc.value.trim();
+  const img = els.productImg.value.trim();
+  const badge = els.productBadge.value;
+
+  const scales = {};
+  document.querySelectorAll('.scale-admin-row').forEach(row => {
+    const key = row.querySelector('.scale-key').value.trim();
+    const price = parseInt(row.querySelector('.scale-price-input').value);
+    if (key && price) scales[key] = price;
+  });
+
+  if (!name || !category || Object.keys(scales).length === 0) {
+    showToast('Completa los campos obligatorios', 'error');
+    return;
+  }
+
+  const price = Math.min(...Object.values(scales));
+
+  if (id) {
+    const product = state.catalog.find(p => p.id === id);
+    if (product) {
+      product.name = name;
+      product.category = category;
+      product.desc = desc;
+      product.img = img || '📦';
+      product.badge = badge || null;
+      product.scales = scales;
+      product.price = price;
+      showToast('Producto actualizado', 'success');
+    }
+  } else {
+    const newProduct = {
+      id: Date.now(),
+      name,
+      category,
+      price,
+      scales,
+      desc,
+      img: img || '📦',
+      badge: badge || null
+    };
+    state.catalog.push(newProduct);
+    showToast('Producto creado', 'success');
+  }
+
+  saveCatalog();
+  renderCatalog(document.querySelector('.cat-tab.active')?.dataset.cat || 'all');
+  closeAdminProductForm();
+});
+
+els.productCancel.addEventListener('click', closeAdminProductForm);
+
+// ===== ADMIN CATEGORY MANAGEMENT =====
+function updateAdminCategoryDropdown() {
+  els.productCategory.innerHTML = '';
+  state.categories.forEach(cat => {
+    if (cat.id !== 'all') {
+      const option = document.createElement('option');
+      option.value = cat.id;
+      option.textContent = cat.name;
+      els.productCategory.appendChild(option);
+    }
+  });
+}
+
+function renderAdminCategories() {
+  els.adminCategoryList.innerHTML = '';
+  state.categories.filter(c => c.id !== 'all').forEach(cat => {
+    const item = document.createElement('div');
+    item.className = 'admin-category-item';
+    item.style.cssText = 'display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;font-size:0.55rem;font-family:JetBrains Mono,monospace';
+    item.innerHTML = `
+      <span>${cat.name}</span>
+      <button onclick="deleteCategory('${cat.id}')" style="background:none;border:none;color:var(--muted2);cursor:pointer;padding:2px">×</button>
+    `;
+    els.adminCategoryList.appendChild(item);
+  });
+}
+
+window.deleteCategory = function(categoryId) {
+  if (confirm('¿Eliminar esta categoría? Los productos no se eliminarán.')) {
+    state.categories = state.categories.filter(c => c.id !== categoryId);
+    saveCatalog();
+    renderCategories();
+    renderAdminCategories();
+    updateAdminCategoryDropdown();
+    showToast('Categoría eliminada', 'success');
+  }
+};
+
+els.addCategoryBtn.addEventListener('click', () => {
+  const name = els.newCategoryName.value.trim();
+  const id = els.newCategoryId.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-');
+
+  if (!name || !id) {
+    showToast('Ingresa nombre e ID de categoría', 'error');
+    return;
+  }
+
+  if (state.categories.some(c => c.id === id)) {
+    showToast('El ID de categoría ya existe', 'error');
+    return;
+  }
+
+  state.categories.push({ id, name });
+  saveCatalog();
+  renderCategories();
+  renderAdminCategories();
+  updateAdminCategoryDropdown();
+
+  els.newCategoryName.value = '';
+  els.newCategoryId.value = '';
+  showToast('Categoría creada', 'success');
+});
+
+// ===== ADMIN EVENT LISTENERS =====
+function setupAdminListeners() {
+  els.adminAddProduct.addEventListener('click', () => {
+    closeAdminProductForm();
+    els.editProductId.value = '';
+    els.productForm.classList.remove('hidden');
+  });
+
+  els.adminAddCategory.addEventListener('click', () => {
+    els.newCategoryName.focus();
+  });
+
+  els.adminExport.addEventListener('click', () => {
+    const data = {
+      catalog: state.catalog,
+      categories: state.categories,
+      exportedAt: new Date().toISOString()
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `vapingstreet-export-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Datos exportados', 'success');
+  });
+}
+
+// ===== EVENT LISTENERS =====
+function setupEventListeners() {
+  els.categories.addEventListener('click', (e) => {
+    if (e.target.classList.contains('cat-tab') && !e.target.classList.contains('admin-add')) {
+      document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+      renderCatalog(e.target.dataset.cat);
+    }
+  });
+
+  els.cartToggle.addEventListener('click', () => {
+    els.cartDrawer.classList.add('active');
+  });
+
+  els.cartClose.addEventListener('click', () => {
+    els.cartDrawer.classList.remove('active');
+  });
+
+  [els.scalesModal, els.checkoutModal, els.adminModal, els.productDetailModal].forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    });
+  });
+}
+
+// ===== TOAST NOTIFICATIONS =====
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(-10px)';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// ===== KEYBOARD SHORTCUTS =====
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    [els.scalesModal, els.checkoutModal, els.adminModal, els.cartDrawer, els.productDetailModal, els.lightbox].forEach(el => {
+      el.classList.remove('active');
+    });
+    closeAdminProductForm();
+  }
+  if (e.key === 'c' && e.ctrlKey) {
+    e.preventDefault();
+    els.cartDrawer.classList.toggle('active');
+  }
+});
+
+// ===== START =====
+window.addEventListener('load', checkAgeVerification);
+</script>
+
+</body>
+</html>
+
